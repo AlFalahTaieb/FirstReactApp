@@ -1,21 +1,42 @@
 "use strict"
-import {createStore} from 'redux';
+//REACT
+
+import React from 'react';
+import {render} from 'react-dom' ;
+
+import {applyMiddleware, createStore} from 'redux';
+
+//import logger 
+
+import logger from 'redux-logger'
 
 //import combined reducers
 import reducers from './reducers/index'
 //import ACTIONS
 
 import {addToCart} from './actions/cartActions'
+//import functions
 
+import {postMovies,updateMovies,deleteMovies} from './actions/moviesActions'
 
 //Creation du store
-const store = createStore(reducers);
+
+const middleware=applyMiddleware(logger);
+const store = createStore(reducers,middleware);
 
 
-store.subscribe(function(){
-console.log('current state is : ', store.getState());
-// console.log('current Description: ',store.getState()[1].description);
-})
+
+import MoviesList from './components/pages/moviesLists'
+
+render(
+<MoviesList/>,document.getElementById('app')
+	);
+
+
+// store.subscribe(function(){
+// console.log('current state is : ', store.getState());
+// // console.log('current Description: ',store.getState()[1].description);
+// })
 
 //Step 2 create and dispatch actions 
 
@@ -25,42 +46,36 @@ console.log('current state is : ', store.getState());
 // store.dispatch({type:"INCREMENT",payload:7})
 // store.dispatch({type:"INCREMENT",payload:9})
 
-store.dispatch({
-type:"POST_MOVIE",
-payload:[{
+store.dispatch(postMovies(
+	[{
 	id:1,
-	title:'this is the movie title',
+	title:'Godfather',
 	description:'this is the movie description',
 	 price:33},
 {
 	id:2,
 	title:'La formule de Dieu',
-	description:'Einstein',
+	description:'Le film qui va vous laisser sans voix',
 	 price:45
-}
-]
-})
+}]
+))
 
 
 //Dispatch a movie
 
-store.dispatch({
-type:"DELETE_MOVIE",
-payload:{
-	id:1}
-})
+store.dispatch(deleteMovies(
+{id:1}
+))
 
 
 
 //update a Book
 
-store.dispatch({
-	type:"UPDATE_MOVIE",
-	payload:{
-		id:2,
-		title:"ForestGump"
-			}
-})
+store.dispatch(updateMovies(
+{id:2,
+title:"ForestGump"}
+
+))
 
 //-->Creation d'une nouvelle action pour la carte 
 

@@ -70,55 +70,22 @@
 "use strict";
 
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _redux = __webpack_require__(8);
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var _index = __webpack_require__(24);
 
-//3 Definir les reducers
-var reducer = function reducer() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { movies: [] };
-	var action = arguments[1];
+var _index2 = _interopRequireDefault(_index);
 
-	switch (action.type) {
-		case "POST_MOVIE":
-			// let books=state.books.concat(action.payload)
-			return { movies: [].concat(_toConsumableArray(state.movies), _toConsumableArray(action.payload)) };
-			break;
+var _cartActions = __webpack_require__(27);
 
-		case "DELETE_MOVIE":
-			var currentMovieToDelete = [].concat(_toConsumableArray(state.movies));
-			var indexToDelete = currentMovieToDelete.findIndex(function (movie) {
-				return movie.id === action.payload.id;
-			});
-			//on utilise slice car nous sommes entrain de travailler sur un tableau
-			return { movies: [].concat(_toConsumableArray(currentMovieToDelete.slice(0, indexToDelete)), _toConsumableArray(currentMovieToDelete.slice(indexToDelete + 1))) };
-			break;
-
-		case "UPDATE_MOVIE":
-			//create a copy of the current array of ..
-			var currentMovieToUpdate = [].concat(_toConsumableArray(state.movies));
-			//Determine at which index in movies array is the book to be updated
-
-			var indexToUpdate = currentMovieToUpdate.findIndex(function (movie) {
-				return movie.id === action.payload.id;
-			});
-			var newMovieToUpdate = _extends({}, currentMovieToUpdate[indexToUpdate], {
-				title: action.payload.title
-				//pour montrer la mise à jour 
-
-			});console.log("what is it newMovieToUpdate", newMovieToUpdate);
-
-			return { movies: [].concat(_toConsumableArray(currentMovieToUpdate.slice(0, indexToUpdate)), [newMovieToUpdate], _toConsumableArray(currentMovieToUpdate.slice(indexToUpdate + 1))) };
-
-			break;
-	}
-	return state;
-};
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //Creation du store
-var store = (0, _redux.createStore)(reducer);
+
+
+//import combined reducers
+var store = (0, _redux.createStore)(_index2.default);
+//import ACTIONS
 
 store.subscribe(function () {
 	console.log('current state is : ', store.getState());
@@ -164,6 +131,11 @@ store.dispatch({
 		title: "ForestGump"
 	}
 });
+
+//-->Creation d'une nouvelle action pour la carte 
+
+//Add to cart
+store.dispatch((0, _cartActions.addToCart)([{ id: 1 }]));
 
 /***/ }),
 /* 1 */
@@ -1402,6 +1374,141 @@ function applyMiddleware() {
       });
     };
   };
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(8);
+
+var _moviesReducers = __webpack_require__(25);
+
+var _cartReducers = __webpack_require__(26);
+
+//On combine ce qu'il y'a la haut
+//CombineReducers==Prend un objet as un argumnt
+
+
+//Importer les Reducers pour pouvoir combiner
+exports.default = (0, _redux.combineReducers)({
+  movies: _moviesReducers.moviesReducers,
+  cart: _cartReducers.cartReducers
+
+});
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.moviesReducers = moviesReducers;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+//3 Definir les reducers
+function moviesReducers() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { movies: [] };
+	var action = arguments[1];
+
+	switch (action.type) {
+		case "POST_MOVIE":
+			// let books=state.books.concat(action.payload)
+			return { movies: [].concat(_toConsumableArray(state.movies), _toConsumableArray(action.payload)) };
+			break;
+
+		case "DELETE_MOVIE":
+			var currentMovieToDelete = [].concat(_toConsumableArray(state.movies));
+			var indexToDelete = currentMovieToDelete.findIndex(function (movie) {
+				return movie.id === action.payload.id;
+			});
+			//on utilise slice car nous sommes entrain de travailler sur un tableau
+			return { movies: [].concat(_toConsumableArray(currentMovieToDelete.slice(0, indexToDelete)), _toConsumableArray(currentMovieToDelete.slice(indexToDelete + 1))) };
+			break;
+
+		case "UPDATE_MOVIE":
+			//create a copy of the current array of ..
+			var currentMovieToUpdate = [].concat(_toConsumableArray(state.movies));
+			//Determine at which index in movies array is the book to be updated
+
+			var indexToUpdate = currentMovieToUpdate.findIndex(function (movie) {
+				return movie.id === action.payload.id;
+			});
+			var newMovieToUpdate = _extends({}, currentMovieToUpdate[indexToUpdate], {
+				title: action.payload.title
+				//pour montrer la mise à jour 
+
+			});console.log("what is it newMovieToUpdate", newMovieToUpdate);
+
+			return { movies: [].concat(_toConsumableArray(currentMovieToUpdate.slice(0, indexToUpdate)), [newMovieToUpdate], _toConsumableArray(currentMovieToUpdate.slice(indexToUpdate + 1))) };
+
+			break;
+	}
+	return state;
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//Cart REducers
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.cartReducers = cartReducers;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function cartReducers() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { cart: [] };
+	var action = arguments[1];
+
+	switch (action.type) {
+		case "ADD_TO_CART":
+			return { cart: [].concat(_toConsumableArray(state.cart), _toConsumableArray(action.payload)) };
+			break;
+	}
+	return state;
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//ADD to CART
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.addToCart = addToCart;
+function addToCart(movie) {
+	return {
+		type: "ADD_TO_CART",
+		payload: movie
+	};
 }
 
 /***/ })

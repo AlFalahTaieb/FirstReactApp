@@ -1,6 +1,18 @@
 "use strict"
 
 
+//Get A MOVIE
+
+export function getMovies(movie){
+	return{
+		type:"GET_MOVIE",
+
+}
+
+}
+
+
+
 //POST A MOVIE
 
 export function postMovies(movie){
@@ -10,6 +22,7 @@ export function postMovies(movie){
 }
 
 }
+
 //DELETE A MOVIE
 export function deleteMovies(id){
 

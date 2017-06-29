@@ -70,16 +70,48 @@
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _redux = __webpack_require__(8);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 //3 Definir les reducers
 var reducer = function reducer() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { movies: [] };
 	var action = arguments[1];
 
 	switch (action.type) {
-		case "POST_BOOK":
-			return state = action.payload;
+		case "POST_MOVIE":
+			// let books=state.books.concat(action.payload)
+			return { movies: [].concat(_toConsumableArray(state.movies), _toConsumableArray(action.payload)) };
+			break;
+
+		case "DELETE_MOVIE":
+			var currentMovieToDelete = [].concat(_toConsumableArray(state.movies));
+			var indexToDelete = currentMovieToDelete.findIndex(function (movie) {
+				return movie.id === action.payload.id;
+			});
+			//on utilise slice car nous sommes entrain de travailler sur un tableau
+			return { movies: [].concat(_toConsumableArray(currentMovieToDelete.slice(0, indexToDelete)), _toConsumableArray(currentMovieToDelete.slice(indexToDelete + 1))) };
+			break;
+
+		case "UPDATE_MOVIE":
+			//create a copy of the current array of ..
+			var currentMovieToUpdate = [].concat(_toConsumableArray(state.movies));
+			//Determine at which index in movies array is the book to be updated
+
+			var indexToUpdate = currentMovieToUpdate.findIndex(function (movie) {
+				return movie.id === action.payload.id;
+			});
+			var newMovieToUpdate = _extends({}, currentMovieToUpdate[indexToUpdate], {
+				title: action.payload.title
+				//pour montrer la mise à jour 
+
+			});console.log("what is it newMovieToUpdate", newMovieToUpdate);
+
+			return { movies: [].concat(_toConsumableArray(currentMovieToUpdate.slice(0, indexToUpdate)), [newMovieToUpdate], _toConsumableArray(currentMovieToUpdate.slice(indexToUpdate + 1))) };
+
 			break;
 	}
 	return state;
@@ -102,11 +134,11 @@ store.subscribe(function () {
 // store.dispatch({type:"INCREMENT",payload:9})
 
 store.dispatch({
-	type: "POST_BOOK",
+	type: "POST_MOVIE",
 	payload: [{
 		id: 1,
-		title: 'this is the book title',
-		description: 'this is the book description',
+		title: 'this is the movie title',
+		description: 'this is the movie description',
 		price: 33 }, {
 		id: 2,
 		title: 'La formule de Dieu',
@@ -115,15 +147,23 @@ store.dispatch({
 	}]
 });
 
-//Dispatch 3rd
+//Dispatch a movie
 
 store.dispatch({
-	type: "POST_BOOK",
+	type: "DELETE_MOVIE",
 	payload: {
-		id: 3,
-		title: 'The Secret path of ?',
-		description: 'GOD And God',
-		price: 17 } });
+		id: 1 }
+});
+
+//update a Book
+
+store.dispatch({
+	type: "UPDATE_MOVIE",
+	payload: {
+		id: 2,
+		title: "ForestGump"
+	}
+});
 
 /***/ }),
 /* 1 */

@@ -9,7 +9,7 @@ class MovieItem extends React.Component{
 
 	handleCart(){
 		const movie =[...this.props.cart,{
-			id:this.props.id,
+			_id:this.props._id,
 			title:this.props.title,
 			description:this.props.description,
 			price:this.props.price

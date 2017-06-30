@@ -18,20 +18,22 @@ class MoviesList extends React.Component{
 componentDidMount(){
 	//dipatch an action 
 	this.props.getMovies(
-		[
-		{
-	id:1,
-	title:'Scarface',
-	description:'this is the movie description',
-	 price:96
-	},
-	{
-	id:2,
-	title:'La ligne verte',
-	description:'Le film qui va vous laisser sans voix',
-	 price:69
-	}
-	]
+
+	// 	[
+	// 	{
+	// _id:1,
+	// title:'Scarface',
+	// description:'this is the movie description',
+	//  price:96
+	// },
+	// {
+	// _id:2,
+	// title:'La ligne verte',
+	// description:'Le film qui va vous laisser sans voix',
+	//  price:69
+	// }
+	// ]
+
 	)
 }
 
@@ -40,9 +42,9 @@ componentDidMount(){
 		// console.log('test,this.props.movies);
 		const moviesList=this.props.movies.map(function(moviesArr){
 return(
-<Col xs={12} sm={6} md={4} key={moviesArr.id}>
+<Col xs={12} sm={6} md={4} key={moviesArr._id}>
 <MovieItem
-		id={moviesArr.id}
+		_id={moviesArr._id}
 		title={moviesArr.title}
 		description={moviesArr.description}
 		price={moviesArr.price}/>

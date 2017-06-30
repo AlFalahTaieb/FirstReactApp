@@ -3,13 +3,13 @@
 export function moviesReducers(state={
 	movies:[
 {
-	id:1,
+	_id:1,
 	title:'Scarface',
 	description:'this is the movie description',
 	 price:96
 	},
 	{
-	id:2,
+	_id:2,
 	title:'La ligne verte',
 	description:'Le film qui va vous laisser sans voix',
 	 price:69
@@ -32,7 +32,7 @@ export function moviesReducers(state={
 		const currentMovieToDelete=[...state.movies]
 		const indexToDelete = currentMovieToDelete.findIndex(
 			function(movie){
-				return movie.id ===action.payload.id;
+				return movie._id ===action.payload._id;
 			}
 
 			)
@@ -49,7 +49,7 @@ const currentMovieToUpdate=[...state.movies]
 
 const indexToUpdate=currentMovieToUpdate.findIndex(
 	function(movie){
-		return movie.id===action.payload.id;
+		return movie._id===action.payload._id;
 	})
 const newMovieToUpdate={
 	...currentMovieToUpdate[indexToUpdate],

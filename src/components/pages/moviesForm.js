@@ -40,7 +40,7 @@ render(){
 			</FormGroup>
 
 				<FormGroup controlId="price">
-				<ControlLabel><Pr></Pr>ice</ControlLabel>
+				<ControlLabel>price</ControlLabel>
 					<FormControl
 						type="text"
 						placeholder="Enter price"

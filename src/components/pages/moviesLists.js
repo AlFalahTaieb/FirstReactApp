@@ -9,7 +9,9 @@ import {Grid,Col,Row,Button} from 'react-bootstrap';
 
 import MovieItem from './movieItem';
 
-import MoviesForm from './moviesForm'
+import MoviesForm from './moviesForm';
+
+import Cart from './cart';
 
 
 class MoviesList extends React.Component{
@@ -49,7 +51,9 @@ return(
 	)})
 return(
 <Grid>
-
+	<Row>
+	<Cart/>
+	</Row>
 <Row>
 <Col xs={12} sm={6}>
 <MoviesForm/>

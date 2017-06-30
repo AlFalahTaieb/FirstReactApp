@@ -32,7 +32,10 @@ export function moviesReducers(state={
 		const currentMovieToDelete=[...state.movies]
 		const indexToDelete = currentMovieToDelete.findIndex(
 			function(movie){
-				return movie._id ===action.payload._id;
+				// return movie._id.toString() === action.payload;
+				//ou
+				return movie._id == action.payload;
+
 			}
 
 			)

@@ -32411,7 +32411,9 @@ function moviesReducers() {
 		case "DELETE_MOVIE":
 			var currentMovieToDelete = [].concat(_toConsumableArray(state.movies));
 			var indexToDelete = currentMovieToDelete.findIndex(function (movie) {
-				return movie._id === action.payload._id;
+				// return movie._id.toString() === action.payload;
+				//ou
+				return movie._id == action.payload;
 			});
 			//on utilise slice car nous sommes entrain de travailler sur un tableau
 			return { movies: [].concat(_toConsumableArray(currentMovieToDelete.slice(0, indexToDelete)), _toConsumableArray(currentMovieToDelete.slice(indexToDelete + 1))) };
@@ -32469,9 +32471,12 @@ function cartReducers() {
 			// return{cart:[...state,...action.payload]}
 
 			return _extends({}, state, {
-				cart: action.payload
+				cart: action.payload,
+				totalAmount: totals(action.payload).amount,
+				totalQt: totals(action.payload).qt
+
 			});
-			totalAmount: totals(action.payload).amount;
+
 			break;
 
 		//update
@@ -32488,7 +32493,8 @@ function cartReducers() {
 
 			return _extends({}, state, {
 				cart: cartUpdate,
-				totalAmount: totals(cartUpdate).amount
+				totalAmount: totals(cartUpdate).amount,
+				totalQt: totals(cartUpdate).qt
 			});
 			break;
 
@@ -32497,8 +32503,10 @@ function cartReducers() {
 			// return{cart:[...state,...action.payload]}
 
 			return _extends({}, state, {
-				cart: action.payload });
-			totalAmount: totals(action.payload).amount;
+				cart: action.payload,
+				totalAmount: totals(action.payload).amount,
+				totalQt: totals(action.payload).qt
+			});
 
 			break;
 
@@ -32514,7 +32522,14 @@ function totals(payloadArr) {
 	}).reduce(function (a, b) {
 		return a + b;
 	}, 0); //Débuter par 0 
-	return { amount: totalAmount.toFixed(2) };
+
+	var totalqt = payloadArr.map(function (qt) {
+		return qt.quantity;
+	}).reduce(function (a, b) {
+		return a + b;
+	}, 0);
+
+	return { amount: totalAmount.toFixed(2), qt: totalqt };
 }
 
 /***/ }),
@@ -43543,8 +43558,22 @@ var MovieForm = function (_React$Component) {
 			this.props.postMovies(movie);
 		}
 	}, {
+		key: 'onDelete',
+		value: function onDelete() {
+			var movieId = (0, _reactDom.findDOMNode)(this.refs.delete).value;
+			this.props.deleteMovies(movieId);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
+
+			var moviesList = this.props.movies.map(function (moviesArr) {
+				return _react2.default.createElement(
+					'option',
+					{ key: moviesArr._id },
+					moviesArr._id
+				);
+			});
 
 			return _react2.default.createElement(
 				_reactBootstrap.Well,
@@ -43596,6 +43625,34 @@ var MovieForm = function (_React$Component) {
 						{ onClick: this.handleSubmit.bind(this), bsStyle: 'primary' },
 						'Save'
 					)
+				),
+				_react2.default.createElement(
+					_reactBootstrap.Panel,
+					{ style: { marginTop: '25px' } },
+					_react2.default.createElement(
+						_reactBootstrap.FormGroup,
+						{ controlId: 'formControlsSelectMultiple' },
+						_react2.default.createElement(
+							_reactBootstrap.ControlLabel,
+							null,
+							'Select A Movie'
+						),
+						_react2.default.createElement(
+							_reactBootstrap.FormControl,
+							{ ref: 'delete', componentClass: 'select' },
+							_react2.default.createElement(
+								'option',
+								{ value: 'select' },
+								'Select'
+							),
+							moviesList
+						)
+					),
+					_react2.default.createElement(
+						_reactBootstrap.Button,
+						{ onClick: this.onDelete.bind(this), bsStyle: 'danger' },
+						'Delete Movie'
+					)
 				)
 			);
 		}
@@ -43604,10 +43661,19 @@ var MovieForm = function (_React$Component) {
 	return MovieForm;
 }(_react2.default.Component);
 
-function mapDispatchToPropos(dispatch) {
-	return (0, _redux.bindActionCreators)({ postMovies: _moviesActions.postMovies }, dispatch);
+function mapStateToProps(state) {
+	return {
+		movies: state.movies.movies
+	};
 }
-exports.default = (0, _reactRedux.connect)(null, mapDispatchToPropos)(MovieForm);
+
+function mapDispatchToPropos(dispatch) {
+	return (0, _redux.bindActionCreators)({
+		postMovies: _moviesActions.postMovies,
+		deleteMovies: _moviesActions.deleteMovies
+	}, dispatch);
+}
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToPropos)(MovieForm);
 
 /***/ }),
 /* 486 */
@@ -43801,7 +43867,8 @@ var Cart = function (_React$Component) {
 						_react2.default.createElement(
 							'h6',
 							null,
-							'Total Amount:'
+							'Total Amount:',
+							this.props.totalAmount
 						),
 						_react2.default.createElement(
 							_reactBootstrap.Button,
@@ -43845,7 +43912,8 @@ var Cart = function (_React$Component) {
 							_react2.default.createElement(
 								'h6',
 								null,
-								'Total $:'
+								'Total $:',
+								this.props.totalAmount
 							)
 						),
 						_react2.default.createElement(
@@ -43864,7 +43932,8 @@ var Cart = function (_React$Component) {
 
 function mapStateToProps(state) {
 	return {
-		cart: state.cart.cart
+		cart: state.cart.cart,
+		totalAmount: state.cart.totalAmount
 	};
 }
 

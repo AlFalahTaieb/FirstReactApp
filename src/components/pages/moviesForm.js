@@ -5,7 +5,7 @@ import {Well,Panel,FormControl,FormGroup,ControlLabel,Button} from 'react-bootst
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {findDOMNode} from 'react-dom';
-import {postMovies} from '../../actions/moviesActions';
+import {postMovies,deleteMovies} from '../../actions/moviesActions';
 
 
 class MovieForm extends React.Component{
@@ -18,7 +18,18 @@ handleSubmit(){
 	this.props.postMovies(movie);
 }
 
+onDelete(){
+	let movieId= findDOMNode(this.refs.delete).value;
+	this.props.deleteMovies(movieId);
+}
+
 render(){
+
+const moviesList = this.props.movies.map(function(moviesArr){
+return(
+<option key={moviesArr._id}>{moviesArr._id}</option>
+	)
+})
 
 	return(
 		<Well>
@@ -49,14 +60,32 @@ render(){
 
 			<Button onClick={this.handleSubmit.bind(this)} bsStyle="primary">Save</Button>
 			</Panel>
+			<Panel style={{marginTop:'25px'}}>
+				      <FormGroup controlId="formControlsSelectMultiple">
+        <ControlLabel>Select A Movie</ControlLabel>
+        <FormControl ref="delete" componentClass="select">
+          <option value="select">Select</option>
+          {moviesList}
+        </FormControl>
+      </FormGroup>
+      <Button onClick={this.onDelete.bind(this)}bsStyle="danger">Delete Movie</Button>
+			</Panel>
 		</Well>
 
 )
 }
 
 }
+function mapStateToProps(state){
+	return{
+		movies:state.movies.movies
+	}
+}
 
 function mapDispatchToPropos(dispatch){
-	return bindActionCreators({postMovies},dispatch)
+	return bindActionCreators({
+		postMovies,
+		deleteMovies
+	},dispatch)
 }
-export default connect(null,mapDispatchToPropos)(MovieForm);
+export default connect(mapStateToProps,mapDispatchToPropos)(MovieForm);

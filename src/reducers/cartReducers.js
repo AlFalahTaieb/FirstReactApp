@@ -13,9 +13,12 @@ switch(action.type){
 	// return{cart:[...state,...action.payload]}
 	
 	return{...state,
-		cart:action.payload
+		cart:action.payload,
+		totalAmount:totals(action.payload).amount,
+	totalQt:totals(action.payload).qt
+
 	}
-	totalAmount:totals(action.payload).amount
+	
 	break;
 
 //update
@@ -36,7 +39,8 @@ let cartUpdate = [...currentMovieToUpdate.slice(0,indexToUpdate),newMovieToUpdat
  
  return {...state,
 		cart:cartUpdate,
-		totalAmount:totals(cartUpdate).amount
+		totalAmount:totals(cartUpdate).amount,
+		totalQt: totals(cartUpdate).qt
 	}
 	break;
 
@@ -46,8 +50,10 @@ let cartUpdate = [...currentMovieToUpdate.slice(0,indexToUpdate),newMovieToUpdat
 	// return{cart:[...state,...action.payload]}
 
 	return{...state,
-		cart:action.payload}
-		totalAmount:totals(action.payload).amount
+		cart:action.payload,
+			totalAmount:totals(action.payload).amount,
+ totalQt:totals(action.payload).qt
+}
 
 	
 	break;
@@ -65,5 +71,12 @@ export function totals(payloadArr){
 	}).reduce(function(a,b){
 		return a+b;
 	},0)//Débuter par 0 
-	return {amount:totalAmount.toFixed(2)}
+
+const totalqt=payloadArr.map(function(qt){
+	return qt.quantity;
+}).reduce(function(a,b){
+return a + b;
+},0);
+
+	return {amount:totalAmount.toFixed(2),qt:totalqt}
 }

@@ -4,6 +4,7 @@
 import React from 'react';
 import {render} from 'react-dom' ;
 import {Provider} from 'react-redux';
+import {Router,Route,IndexRoute, browserHistory,hashHistory} from 'react-router';
 
 
 import {applyMiddleware, createStore} from 'redux';
@@ -14,11 +15,12 @@ import logger from 'redux-logger';
 
 //import combined reducers
 import reducers from './reducers/index';
-//importation du menu 
-import Menu from './components/menu';
-//Import Footer
-import Footer from './components/footer'
-//import ACTIONS
+// j'ai fait tout ce qui est en bas car je ne travaillais pas avec react-router
+// //importation du menu 
+// import Menu from './components/menu';
+// //Import Footer
+// import Footer from './components/footer'
+// //import ACTIONS
 
 import {addToCart} from './actions/cartActions';
 //import functions
@@ -32,17 +34,24 @@ const store = createStore(reducers,middleware);
 
 
 
-import MoviesList from './components/pages/moviesLists'
-
-render(
+import MoviesList from './components/pages/moviesLists';
+import Cart from './components/pages/cart';
+import MovieForm from './components/pages/moviesForm';
+import Main from './main';
+const Routes=(
 <Provider store={store}>
-<div>
-	<Menu />
-	<MoviesList/>
-	<Footer />
-</div>
+<Router history={browserHistory}>
+<Route path="/" component={Main}>
+<IndexRoute component={MoviesList}/>
+<Route path="/admin" component={MovieForm}/>
+<Route path="/cart" component={Cart}/>
+</Route>
 
-</Provider>,document.getElementById('app')
+</Router>
+</Provider>
+)
+render(
+	Routes,document.getElementById('app')
 	);
 
 

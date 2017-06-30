@@ -3,7 +3,7 @@ import {Row,Col,Well,Button} from 'react-bootstrap';
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import {addToCart} from '../../actions/cartActions'
+import {addToCart,updateCart} from '../../actions/cartActions'
 
 class MovieItem extends React.Component{
 
@@ -12,9 +12,33 @@ class MovieItem extends React.Component{
 			_id:this.props._id,
 			title:this.props.title,
 			description:this.props.description,
-			price:this.props.price
+			price:this.props.price,
+			quantity:1
 		}]
-		this.props.addToCart(movie)
+				//Voir si la carte est vide ou pas
+
+				if(this.props.cart.length>0){
+					//Cart non vide
+					let _id=this.props._id
+					let cartIndex=this.props.cart.findIndex(function(cart){
+						return cart._id ===_id
+					})
+					//if retourne -1 c'est à dire pas du même ID 
+					if (cartIndex ===-1){
+						this.props.addToCart(movie);
+					}
+					else{
+						// Juste mise à jour de la quantity 
+						this.props.updateCart(_id,1)
+					}
+
+
+				}else{
+					//Cart est vide 
+					this.props.addToCart(movie)
+				}
+
+		
 	}
 render(){
 	return(
@@ -40,7 +64,8 @@ function mapStateToProps(state){
 
 function mapDispatchToPropos(dispatch){
 	return bindActionCreators({
-		addToCart:addToCart
+		addToCart:addToCart,
+		updateCart:updateCart
 	},dispatch)
 }
 

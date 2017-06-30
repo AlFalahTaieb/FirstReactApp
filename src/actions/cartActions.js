@@ -1,6 +1,6 @@
 "use strict"
 
-//ADD to CART
+//ADD to chariot
 
 export function addToCart(movie){
 	return{
@@ -12,14 +12,21 @@ export function addToCart(movie){
 
 }
 
-//Delete From Cart
+//Delete From chariot
 
 export function deleteCartItem(cart){
 	return{
 		type:"DELETE_CART_ITEM",
 		payload:cart
 	}
+}
 
-
+//Update chariot 
+export function updateCart(_id, unit){
+	return{
+		type:"UPDATE_CART",
+		_id:_id,
+		unit:unit
+	}
 	
 }

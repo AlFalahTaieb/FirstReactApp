@@ -10,13 +10,17 @@ import {applyMiddleware, createStore} from 'redux';
 
 //import logger 
 
-import logger from 'redux-logger'
+import logger from 'redux-logger';
 
 //import combined reducers
-import reducers from './reducers/index'
+import reducers from './reducers/index';
+//importation du menu 
+import Menu from './components/menu';
+//Import Footer
+import Footer from './components/footer'
 //import ACTIONS
 
-import {addToCart} from './actions/cartActions'
+import {addToCart} from './actions/cartActions';
 //import functions
 
 import {postMovies,updateMovies,deleteMovies,getMovies} from './actions/moviesActions'
@@ -32,7 +36,12 @@ import MoviesList from './components/pages/moviesLists'
 
 render(
 <Provider store={store}>
-<MoviesList/>
+<div>
+	<Menu />
+	<MoviesList/>
+	<Footer />
+</div>
+
 </Provider>,document.getElementById('app')
 	);
 

@@ -43387,6 +43387,14 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(171);
 
+var _reactRedux = __webpack_require__(161);
+
+var _redux = __webpack_require__(71);
+
+var _reactDom = __webpack_require__(20);
+
+var _moviesActions = __webpack_require__(170);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43405,6 +43413,16 @@ var MovieForm = function (_React$Component) {
 	}
 
 	_createClass(MovieForm, [{
+		key: 'handleSubmit',
+		value: function handleSubmit() {
+			var movie = [{
+				title: (0, _reactDom.findDOMNode)(this.refs.title).value,
+				description: (0, _reactDom.findDOMNode)(this.refs.description).value,
+				price: (0, _reactDom.findDOMNode)(this.refs.price).value
+			}];
+			this.props.postMovies(movie);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 
@@ -43446,7 +43464,8 @@ var MovieForm = function (_React$Component) {
 						_react2.default.createElement(
 							_reactBootstrap.ControlLabel,
 							null,
-							'price'
+							_react2.default.createElement(Pr, null),
+							'ice'
 						),
 						_react2.default.createElement(_reactBootstrap.FormControl, {
 							type: 'text',
@@ -43455,7 +43474,7 @@ var MovieForm = function (_React$Component) {
 					),
 					_react2.default.createElement(
 						_reactBootstrap.Button,
-						{ bsStyle: 'primary' },
+						{ onClick: this.handleSubmit.bind(this), bsStyle: 'primary' },
 						'Save'
 					)
 				)
@@ -43466,7 +43485,10 @@ var MovieForm = function (_React$Component) {
 	return MovieForm;
 }(_react2.default.Component);
 
-exports.default = MovieForm;
+function mapDispatchToPropos(dispatch) {
+	return (0, _redux.bindActionCreators)({ postMovies: _moviesActions.postMovies }, dispatch);
+}
+exports.default = (0, _reactRedux.connect)(null, mapDispatchToPropos)(MovieForm);
 
 /***/ })
 /******/ ]);

@@ -2,8 +2,22 @@
 
 import React from 'react';
 import {Well,Panel,FormControl,FormGroup,ControlLabel,Button} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {findDOMNode} from 'react-dom';
+import {postMovies} from '../../actions/moviesActions';
+
 
 class MovieForm extends React.Component{
+handleSubmit(){
+	const movie=[{
+		title:findDOMNode(this.refs.title).value,
+		description:findDOMNode(this.refs.description).value,
+		price:findDOMNode(this.refs.price).value
+	}]
+	this.props.postMovies(movie);
+}
+
 render(){
 
 	return(
@@ -26,14 +40,14 @@ render(){
 			</FormGroup>
 
 				<FormGroup controlId="price">
-				<ControlLabel>price</ControlLabel>
+				<ControlLabel><Pr></Pr>ice</ControlLabel>
 					<FormControl
 						type="text"
 						placeholder="Enter price"
 						ref="price" />
 			</FormGroup>
 
-			<Button bsStyle="primary">Save</Button>
+			<Button onClick={this.handleSubmit.bind(this)} bsStyle="primary">Save</Button>
 			</Panel>
 		</Well>
 
@@ -42,4 +56,7 @@ render(){
 
 }
 
-export default MovieForm
+function mapDispatchToPropos(dispatch){
+	return bindActionCreators({postMovies},dispatch)
+}
+export default connect(null,mapDispatchToPropos)(MovieForm);

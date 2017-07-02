@@ -11053,6 +11053,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var GET_MOVIES = "GET_MOVIES";
 var POST_MOVIE = "POST_MOVIE";
+var DELETE_MOVIE = "DELETE_MOVIE";
 
 //Get A MOVIE
 
@@ -11082,10 +11083,10 @@ function postMovies(movie) {
 //DELETE A MOVIE
 function deleteMovies(id) {
 	return function (dispatch) {
-		_axios2.default.delete("/books/" + id).then(function (response) {
+		_axios2.default.delete("/movies/" + id).then(function (response) {
 			dispatch({ type: "DELETE_MOVIE", payload: id });
 		}).catch(function (err) {
-			dispatch({ type: "DELETE_BOOK_REJECTED", payload: err });
+			dispatch({ type: "DELETE_MOVIE_REJECTED", payload: err });
 		});
 	};
 }

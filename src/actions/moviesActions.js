@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const GET_MOVIES = "GET_MOVIES";
 const POST_MOVIE = "POST_MOVIE";
-
+const DELETE_MOVIE = "DELETE_MOVIE";
 
 //Get A MOVIE
 
@@ -43,12 +43,12 @@ export function postMovies(movie){
 //DELETE A MOVIE
 export function deleteMovies(id){
 	return function(dispatch){
-		axios.delete("/books/"+id)
+		axios.delete("/movies/"+id)
 		.then(function(response){
 			dispatch({type:"DELETE_MOVIE",payload:id})
 		})
 		.catch(function(err){
-			dispatch({type:"DELETE_BOOK_REJECTED",payload:err})
+			dispatch({type:"DELETE_MOVIE_REJECTED",payload:err})
 		})
 	}
 }

@@ -4,14 +4,17 @@
 import React from 'react';
 import {render} from 'react-dom' ;
 import {Provider} from 'react-redux';
-import {Router,Route,IndexRoute, browserHistory,hashHistory} from 'react-router';
+import {Router,Route,IndexRoute, browserHistory} from 'react-router';
+import promise from 'redux-promise'
 
-
+// import { createLogger } from 'redux-logger'
 import {applyMiddleware, createStore} from 'redux';
 
 //import logger 
 
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+// import { createLogger } from "redux-logger";
 
 //import combined reducers
 import reducers from './reducers/index';
@@ -25,26 +28,43 @@ import reducers from './reducers/index';
 import {addToCart} from './actions/cartActions';
 //import functions
 
-import {postMovies,updateMovies,deleteMovies,getMovies} from './actions/moviesActions'
-
-//Creation du store
-
-const middleware=applyMiddleware(logger);
-const store = createStore(reducers,middleware);
-
-
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const store = createStore(reducers, composeEnhancers(middleware));
 
 import MoviesList from './components/pages/moviesLists';
 import Cart from './components/pages/cart';
 import MovieForm from './components/pages/moviesForm';
 import Main from './main';
+const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
+
+import {postMovies,updateMovies,deleteMovies,getMovies} from './actions/moviesActions'
+const middleware =applyMiddleware(thunk,logger());
+// const store = createStore(reducers, middleware,applyMiddleware, promise);
+const store = createStoreWithMiddleware(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+
+//Creation du store
+// const middleware = applyMiddleware( thunk,  logger() );
+// // const middleware=applyMiddleware(thunk,logger);
+// export default compose(applyMiddleware(thunk))(createStore)(logger);
+// const store = createStore(reducers,middleware);
+
+
+
+
 const Routes=(
 <Provider store={store}>
 <Router history={browserHistory}>
 <Route path="/" component={Main}>
-<IndexRoute component={MoviesList}/>
-<Route path="/admin" component={MovieForm}/>
-<Route path="/cart" component={Cart}/>
+<IndexRoute
+ component={MoviesList}/>
+<Route path="/admin" 
+component={MovieForm}/>
+<Route path="/cart" 
+component={Cart}/>
 </Route>
 
 </Router>

@@ -3,14 +3,25 @@
 //ADD to chariot
 
 export function addToCart(movie){
-	return{
-		type:"ADD_TO_CART",
-		payload:movie
-	}
-
-
-
+	
+	  return function(dispatch) {
+    axios.post('cart', cart)
+      .then(function(response) {
+        dispatch({
+          type: ADD_TO_CART,
+          payload: response.data
+        })
+      })
+      .catch(function(err) {
+        dispatch({
+          type: ADD_TO_CART_REJECTED,
+          msg: 'Error posting to cart.'
+        })
+      })
+  };
 }
+
+
 
 //Delete From chariot
 

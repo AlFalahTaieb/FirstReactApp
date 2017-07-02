@@ -1,31 +1,28 @@
-
+"use strict"
 //3 Definir les reducers
 export function moviesReducers(state={
-	movies:[
-{
-	_id:1,
-	title:'Scarface',
-	description:'this is the movie description',
-	 price:96
-	},
-	{
-	_id:2,
-	title:'La ligne verte',
-	description:'Le film qui va vous laisser sans voix',
-	 price:69
-	}
-	]
+	movies:[]
 },action){
 	switch(action.type){
 
 	case "GET_MOVIE":
 	
-		return {...state,movies:[...state.movies]};
+		return {...state,
+		movies:[...action.payload]}
 		break;
 
 		case "POST_MOVIE":
-		// let books=state.books.concat(action.payload)
-		return {movies:[...state.movies,...action.payload]};
+
+		// return {...state,movies:[...state.movies, ...action.payload]};
+		return {...state,
+        movies: [
+          ...state.books,
+          ...action.payload,
+        ],
+        msg: 'Saved! Click to continue',
+        style: 'success',
+        validation: 'success',
+      };
 		break;
 	
 		case "DELETE_MOVIE":

@@ -64,8 +64,8 @@ Movies.remove(query,function(err,movies){
 })
 });
 //Update
-app.put('/movies/:_id,function(req,res'){
-	var movies = req.body;
+app.put('/movies/:_id',function(req,res){
+	var movie = req.body;
 	var query = req.params._id;
 	//si non éxistant création d'un nouveau champ
 	var update={
@@ -75,9 +75,20 @@ app.put('/movies/:_id,function(req,res'){
 			image:movie.image,
 			price:movie.price
 		}
-
-	}
 };
+
+var options={new:true};
+
+Movies.findOneAndUpdate(query, update, options, function(err,movies){
+	if(err){
+		throw err;
+	}
+	res.json(movies);
+})
+})
+
+
+
 
 
 app.get('*',function(req,res){

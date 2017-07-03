@@ -16,7 +16,7 @@ export function moviesReducers(state={
 		// return {...state,movies:[...state.movies, ...action.payload]};
 		return {...state,
         movies: [
-          ...state.books,
+          ...state.movies,
           ...action.payload,
         ],
         msg: 'Saved! Click to continue',

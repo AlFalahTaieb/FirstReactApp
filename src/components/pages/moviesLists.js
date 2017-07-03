@@ -17,37 +17,20 @@ import Cart from './cart';
 class MoviesList extends React.Component{
 componentDidMount(){
 	//dipatch an action 
-	this.props.getMovies(
-
-	// 	[
-	// 	{
-	// _id:1,
-	// title:'Scarface',
-	// description:'this is the movie description',
-	//  price:96
-	// },
-	// {
-	// _id:2,
-	// title:'La ligne verte',
-	// description:'Le film qui va vous laisser sans voix',
-	//  price:69
-	// }
-	// ]
-
-	)
+	this.props.getMovies()
 }
 
 	render(){
-
-		// console.log('test,this.props.movies);
-		const moviesList=this.props.movies.map(function(moviesArr){
+	const moviesList=
+this.props.movies.map(function(moviesArr){
 return(
 <Col xs={12} sm={6} md={4} key={moviesArr._id}>
 <MovieItem
 		_id={moviesArr._id}
 		title={moviesArr.title}
 		description={moviesArr.description}
-		price={moviesArr.price}/>
+		price={moviesArr.price}
+		images={moviesArr.images}/>
 
 </Col>
 	)})

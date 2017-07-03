@@ -7,6 +7,14 @@
 export function cartReducers(state={cart:[]},action){
 switch(action.type){
 
+case "GET_CART":
+return{...state,
+cart:action.payload,
+totalAmount:totals(action.payload).amount,
+totalqt:totals(action.payload).qt
+}
+
+break;
 
 
 	case"ADD_TO_CART":
@@ -15,7 +23,7 @@ switch(action.type){
 	return{...state,
 		cart:action.payload,
 		totalAmount:totals(action.payload).amount,
-	totalQt:totals(action.payload).qt
+	totalqt:totals(action.payload).qt
 
 	}
 	
@@ -24,25 +32,14 @@ switch(action.type){
 //update
 
 	case"UPDATE_CART":
-const currentMovieToUpdate=[...state.cart]
-const indexToUpdate=currentMovieToUpdate.findIndex(
-	function(movie){
-		return movie._id === action._id;
-	}
-   )
-const newMovieToUpdate = {
-	...currentMovieToUpdate[indexToUpdate],
-	quantity: currentMovieToUpdate[indexToUpdate].quantity + action.unit
+return{...state,
+	cart:action.payload,
+	totalAmount:
+	totals(action.payload).amount,
+	totalqt:totals(action.payload).qt
 }
-let cartUpdate = [...currentMovieToUpdate.slice(0,indexToUpdate),newMovieToUpdate,
-...currentMovieToUpdate.slice(indexToUpdate+1)]
- 
- return {...state,
-		cart:cartUpdate,
-		totalAmount:totals(cartUpdate).amount,
-		totalQt: totals(cartUpdate).qt
-	}
 	break;
+
 
 
 //Delete
@@ -52,7 +49,7 @@ let cartUpdate = [...currentMovieToUpdate.slice(0,indexToUpdate),newMovieToUpdat
 	return{...state,
 		cart:action.payload,
 			totalAmount:totals(action.payload).amount,
- totalQt:totals(action.payload).qt
+ totalqt:totals(action.payload).qt
 }
 
 	

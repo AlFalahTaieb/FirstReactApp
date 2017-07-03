@@ -2137,7 +2137,7 @@ module.exports = { debugTool: debugTool };
 "use strict";
 
 
-var bind = __webpack_require__(207);
+var bind = __webpack_require__(206);
 var isBuffer = __webpack_require__(418);
 
 /*global toString:true*/
@@ -10998,7 +10998,7 @@ exports.addToCart = addToCart;
 exports.updateCart = updateCart;
 exports.deleteCartItem = deleteCartItem;
 
-var _axios = __webpack_require__(206);
+var _axios = __webpack_require__(123);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11094,6 +11094,12 @@ function deleteCartItem(cart) {
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(417);
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -11114,10 +11120,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(208);
+    adapter = __webpack_require__(207);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(208);
+    adapter = __webpack_require__(207);
   }
   return adapter;
 }
@@ -11189,87 +11195,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.getMovies = getMovies;
-exports.postMovies = postMovies;
-exports.deleteMovies = deleteMovies;
-exports.updateMovies = updateMovies;
-
-var _axios = __webpack_require__(206);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var GET_MOVIE = "GET_MOVIE";
-var POST_MOVIE = "POST_MOVIE";
-var DELETE_MOVIE = "DELETE_MOVIE";
-var GET_MOVIE_REJECTED = "GET_MOVIE_REJECTED";
-var POST_MOVIE_REJECTED = "POST_MOVIE_REJECTED";
-var DELETE_MOVIE_REJECTED = "DELETE_MOVIE_REJECTED";
-//Get A MOVIE
-
-function getMovies() {
-	return function (dispatch) {
-		_axios2.default.get('/api/movies').then(function (response) {
-			dispatch({
-				type: GET_MOVIE,
-				payload: response.data });
-		}).catch(function (err) {
-			dispatch({ type: GET_MOVIE_REJECTED,
-				payload: err });
-		});
-	};
-}
-
-//POST A MOVIE
-
-function postMovies(movie) {
-	return function (dispatch) {
-		_axios2.default.post("/api/movies", movie) //you should return axios
-		.then(function (response) {
-			dispatch({
-				type: POST_MOVIE,
-				payload: response.data });
-		}).catch(function (err) {
-			dispatch({ type: POST_MOVIE_REJECTED,
-				payload: "there was an error while posting a new movie" });
-		});
-	};
-}
-
-//DELETE A MOVIE
-function deleteMovies(id) {
-	return function (dispatch) {
-		_axios2.default.delete("/api/movies/" + id).then(function (response) {
-			dispatch({ type: DELETE_MOVIE,
-				payload: id });
-		}).catch(function (err) {
-			dispatch({ type: DELETE_MOVIE_REJECTED,
-				payload: err });
-		});
-	};
-}
-
-//UPDATE A MOVIE
-
-function updateMovies(movie) {
-
-	return {
-		type: "UPDATE_MOVIE",
-		payload: movie
-	};
-}
 
 /***/ }),
 /* 125 */
@@ -19044,12 +18969,6 @@ module.exports = isArguments;
 /* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(417);
-
-/***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -19065,7 +18984,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 208 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19076,7 +18995,7 @@ var settle = __webpack_require__(421);
 var buildURL = __webpack_require__(423);
 var parseHeaders = __webpack_require__(424);
 var isURLSameOrigin = __webpack_require__(425);
-var createError = __webpack_require__(209);
+var createError = __webpack_require__(208);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(426);
 
 module.exports = function xhrAdapter(config) {
@@ -19253,7 +19172,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 209 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19278,7 +19197,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 210 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19290,7 +19209,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 211 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19314,6 +19233,87 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.getMovies = getMovies;
+exports.postMovies = postMovies;
+exports.deleteMovies = deleteMovies;
+exports.updateMovies = updateMovies;
+
+var _axios = __webpack_require__(123);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var GET_MOVIE = "GET_MOVIE";
+var POST_MOVIE = "POST_MOVIE";
+var DELETE_MOVIE = "DELETE_MOVIE";
+var GET_MOVIE_REJECTED = "GET_MOVIE_REJECTED";
+var POST_MOVIE_REJECTED = "POST_MOVIE_REJECTED";
+var DELETE_MOVIE_REJECTED = "DELETE_MOVIE_REJECTED";
+//Get A MOVIE
+
+function getMovies() {
+	return function (dispatch) {
+		_axios2.default.get('/api/movies').then(function (response) {
+			dispatch({
+				type: GET_MOVIE,
+				payload: response.data });
+		}).catch(function (err) {
+			dispatch({ type: GET_MOVIE_REJECTED,
+				payload: err });
+		});
+	};
+}
+
+//POST A MOVIE
+
+function postMovies(movie) {
+	return function (dispatch) {
+		_axios2.default.post("/api/movies", movie) //you should return axios
+		.then(function (response) {
+			dispatch({
+				type: POST_MOVIE,
+				payload: response.data });
+		}).catch(function (err) {
+			dispatch({ type: POST_MOVIE_REJECTED,
+				payload: "there was an error while posting a new movie" });
+		});
+	};
+}
+
+//DELETE A MOVIE
+function deleteMovies(id) {
+	return function (dispatch) {
+		_axios2.default.delete("/api/movies/" + id).then(function (response) {
+			dispatch({ type: DELETE_MOVIE,
+				payload: id });
+		}).catch(function (err) {
+			dispatch({ type: DELETE_MOVIE_REJECTED,
+				payload: err });
+		});
+	};
+}
+
+//UPDATE A MOVIE
+
+function updateMovies(movie) {
+
+	return {
+		type: "UPDATE_MOVIE",
+		payload: movie
+	};
+}
 
 /***/ }),
 /* 212 */
@@ -23168,9 +23168,9 @@ var _redux = __webpack_require__(43);
 
 var _reactDom = __webpack_require__(21);
 
-var _moviesActions = __webpack_require__(124);
+var _moviesActions = __webpack_require__(211);
 
-var _axios = __webpack_require__(206);
+var _axios = __webpack_require__(123);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -23182,13 +23182,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MovieForm = function (_React$Component) {
-  _inherits(MovieForm, _React$Component);
+var MoviesForm = function (_React$Component) {
+  _inherits(MoviesForm, _React$Component);
 
-  function MovieForm() {
-    _classCallCheck(this, MovieForm);
+  function MoviesForm() {
+    _classCallCheck(this, MoviesForm);
 
-    var _this = _possibleConstructorReturn(this, (MovieForm.__proto__ || Object.getPrototypeOf(MovieForm)).call(this));
+    var _this = _possibleConstructorReturn(this, (MoviesForm.__proto__ || Object.getPrototypeOf(MoviesForm)).call(this));
 
     _this.state = {
       images: [{}],
@@ -23197,19 +23197,34 @@ var MovieForm = function (_React$Component) {
     return _this;
   }
 
-  _createClass(MovieForm, [{
+  _createClass(MoviesForm, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // get imgs from api:
       this.props.getMovies();
-      _axios2.default.get('/api/images/').then(function (response) {
+      //GET IMAGES FROM API
+      _axios2.default.get('/api/images').then(function (response) {
         this.setState({ images: response.data });
       }.bind(this)).catch(function (err) {
-        this.setState({
-          images: 'Error loading image files from server.',
-          img: ''
-        });
+        this.setState({ images: 'error loading image files from the server', img: '' });
       }.bind(this));
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit() {
+      var movie = [{
+        title: (0, _reactDom.findDOMNode)(this.refs.title).value,
+        description: (0, _reactDom.findDOMNode)(this.refs.description).value,
+        images: (0, _reactDom.findDOMNode)(this.refs.image).value,
+        price: (0, _reactDom.findDOMNode)(this.refs.price).value
+      }];
+      this.props.postMovies(movie);
+    }
+  }, {
+    key: 'onDelete',
+    value: function onDelete() {
+      var movieId = (0, _reactDom.findDOMNode)(this.refs.delete).value;
+
+      this.props.deleteMovies(movieId);
     }
   }, {
     key: 'handleSelect',
@@ -23219,21 +23234,15 @@ var MovieForm = function (_React$Component) {
       });
     }
   }, {
-    key: 'handleSubmit',
-    value: function handleSubmit() {
-      var movie = [{
-        title: (0, _reactDom.findDOMNode)(this.refs.title).value,
-        description: (0, _reactDom.findDOMNode)(this.refs.description).value,
-        price: (0, _reactDom.findDOMNode)(this.refs.price).value,
-        images: (0, _reactDom.findDOMNode)(this.refs.image).value
-      }];
-      this.props.postMovies(movie);
-    }
-  }, {
-    key: 'onDelete',
-    value: function onDelete() {
-      var movieId = (0, _reactDom.findDOMNode)(this.refs.delete).value;
-      this.props.deleteMovies(movieId);
+    key: 'resetForm',
+    value: function resetForm() {
+      //RESET THE Button
+      this.props.resetButton();
+
+      (0, _reactDom.findDOMNode)(this.refs.title).value = '';
+      (0, _reactDom.findDOMNode)(this.refs.description).value = '';
+      (0, _reactDom.findDOMNode)(this.refs.price).value = '';
+      this.setState({ img: '' });
     }
   }, {
     key: 'render',
@@ -23243,6 +23252,7 @@ var MovieForm = function (_React$Component) {
         return _react2.default.createElement(
           'option',
           { key: moviesArr._id },
+          ' ',
           moviesArr._id
         );
       });
@@ -23250,14 +23260,12 @@ var MovieForm = function (_React$Component) {
       var imgList = this.state.images.map(function (imgArr, i) {
         return _react2.default.createElement(
           _reactBootstrap.MenuItem,
-          {
-            key: i,
-            eventKey: imgArr.name,
-            onClick: this.handleSelect.bind(this, imgArr.name)
-          },
+          { key: i, eventKey: imgArr.name,
+            onClick: this.handleSelect.bind(this, imgArr.name) },
           imgArr.name
         );
       }, this);
+
       return _react2.default.createElement(
         _reactBootstrap.Well,
         null,
@@ -23279,9 +23287,8 @@ var MovieForm = function (_React$Component) {
                   {
                     componentClass: _reactBootstrap.InputGroup.Button,
                     id: 'input-dropdown-addon',
-                    title: 'Select an Image',
-                    bsStyle: 'primary'
-                  },
+                    title: 'Select an image',
+                    bsStyle: 'primary' },
                   imgList
                 )
               ),
@@ -23296,7 +23303,7 @@ var MovieForm = function (_React$Component) {
               null,
               _react2.default.createElement(
                 _reactBootstrap.FormGroup,
-                { controlId: 'title' },
+                { controlId: 'title', validationState: this.props.validation },
                 _react2.default.createElement(
                   _reactBootstrap.ControlLabel,
                   null,
@@ -23305,11 +23312,12 @@ var MovieForm = function (_React$Component) {
                 _react2.default.createElement(_reactBootstrap.FormControl, {
                   type: 'text',
                   placeholder: 'Enter Title',
-                  ref: 'title' })
+                  ref: 'title' }),
+                _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
               ),
               _react2.default.createElement(
                 _reactBootstrap.FormGroup,
-                { controlId: 'description' },
+                { controlId: 'description', validationState: this.props.validation },
                 _react2.default.createElement(
                   _reactBootstrap.ControlLabel,
                   null,
@@ -23317,46 +23325,50 @@ var MovieForm = function (_React$Component) {
                 ),
                 _react2.default.createElement(_reactBootstrap.FormControl, {
                   type: 'text',
-                  componentClass: 'textarea', placeholder: 'Enter Description',
-                  ref: 'description' })
+                  placeholder: 'Enter Description',
+                  ref: 'description' }),
+                _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
               ),
               _react2.default.createElement(
                 _reactBootstrap.FormGroup,
-                { controlId: 'price' },
+                { controlId: 'price', validationState: this.props.validation },
                 _react2.default.createElement(
                   _reactBootstrap.ControlLabel,
                   null,
-                  'price'
+                  'Price'
                 ),
                 _react2.default.createElement(_reactBootstrap.FormControl, {
                   type: 'text',
-                  placeholder: 'Enter price',
-                  ref: 'price' })
+                  placeholder: 'Enter Price',
+                  ref: 'price' }),
+                _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
               ),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { onClick: this.handleSubmit.bind(this), bsStyle: 'primary' },
-                'Save'
+                {
+                  onClick: !this.props.msg ? this.handleSubmit.bind(this) : this.resetForm.bind(this),
+                  bsStyle: !this.props.style ? "primary" : this.props.style },
+                !this.props.msg ? "Save movie" : this.props.msg
               )
             ),
             _react2.default.createElement(
               _reactBootstrap.Panel,
-              { style: { marginTop: '25px' } },
+              null,
               _react2.default.createElement(
                 _reactBootstrap.FormGroup,
-                { controlId: 'formControlsSelectMultiple' },
+                { controlId: 'formControlsSelect' },
                 _react2.default.createElement(
                   _reactBootstrap.ControlLabel,
                   null,
-                  'Select A Movie'
+                  'Select a movie id to delete'
                 ),
                 _react2.default.createElement(
                   _reactBootstrap.FormControl,
-                  { ref: 'delete', componentClass: 'select' },
+                  { ref: 'delete', componentClass: 'select', placeholder: 'select' },
                   _react2.default.createElement(
                     'option',
                     { value: 'select' },
-                    'Select'
+                    'select'
                   ),
                   moviesList
                 )
@@ -23364,7 +23376,7 @@ var MovieForm = function (_React$Component) {
               _react2.default.createElement(
                 _reactBootstrap.Button,
                 { onClick: this.onDelete.bind(this), bsStyle: 'danger' },
-                'Delete Movie'
+                'Delete movie'
               )
             )
           )
@@ -23373,23 +23385,26 @@ var MovieForm = function (_React$Component) {
     }
   }]);
 
-  return MovieForm;
+  return MoviesForm;
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
   return {
-    movies: state.movies.movies
+    movies: state.movies.movies,
+    msg: state.movies.msg,
+    style: state.movies.style,
+    validation: state.movies.validation
   };
 }
-
-function mapDispatchToPropos(dispatch) {
+function mapDispatchToProps(dispatch) {
   return (0, _redux.bindActionCreators)({
     postMovies: _moviesActions.postMovies,
     deleteMovies: _moviesActions.deleteMovies,
-    getMovies: _moviesActions.getMovies
+    getMovies: _moviesActions.getMovies,
+    resetButton: _moviesActions.resetButton
   }, dispatch);
 }
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToPropos)(MovieForm);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MoviesForm);
 
 /***/ }),
 /* 258 */
@@ -23722,7 +23737,7 @@ var _main = __webpack_require__(573);
 
 var _main2 = _interopRequireDefault(_main);
 
-var _moviesActions = __webpack_require__(124);
+var _moviesActions = __webpack_require__(211);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39313,9 +39328,9 @@ function totals(payloadArr) {
 
 
 var utils = __webpack_require__(26);
-var bind = __webpack_require__(207);
+var bind = __webpack_require__(206);
 var Axios = __webpack_require__(419);
-var defaults = __webpack_require__(123);
+var defaults = __webpack_require__(124);
 
 /**
  * Create an instance of Axios
@@ -39348,9 +39363,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(211);
+axios.Cancel = __webpack_require__(210);
 axios.CancelToken = __webpack_require__(433);
-axios.isCancel = __webpack_require__(210);
+axios.isCancel = __webpack_require__(209);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -39398,7 +39413,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(123);
+var defaults = __webpack_require__(124);
 var utils = __webpack_require__(26);
 var InterceptorManager = __webpack_require__(428);
 var dispatchRequest = __webpack_require__(429);
@@ -39510,7 +39525,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(209);
+var createError = __webpack_require__(208);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -39929,8 +39944,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(26);
 var transformData = __webpack_require__(430);
-var isCancel = __webpack_require__(210);
-var defaults = __webpack_require__(123);
+var isCancel = __webpack_require__(209);
+var defaults = __webpack_require__(124);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -40082,7 +40097,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(211);
+var Cancel = __webpack_require__(210);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -40194,7 +40209,7 @@ var _reactRedux = __webpack_require__(50);
 
 var _redux = __webpack_require__(43);
 
-var _moviesActions = __webpack_require__(124);
+var _moviesActions = __webpack_require__(211);
 
 var _reactBootstrap = __webpack_require__(66);
 
